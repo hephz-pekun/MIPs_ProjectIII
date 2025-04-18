@@ -121,7 +121,11 @@ process_string:
 ps_loop:
     lb   $t0, 0($s1)
     beqz $t0, ps_done
+    # push substring address
+    addi $sp, $sp, -4
+    sw   $s1, 0($sp)
 
+    jal  get_substring_value
 ps_done:
     move $v0, $s2
 
@@ -129,6 +133,12 @@ ps_done:
     lw   $s0,    4($sp)
     lw   $s1,    8($sp)
     lw   $s2,   12($sp)
+    addi $sp, $sp, 16
+    jr   $ra
+
+#------------------------------------------------------------
+# get_substring_value:
+#------------------------------------------------------------
 get_substring_value:
     li $t5, 0 # Counter
     li $s1, 0 # Sum of G
