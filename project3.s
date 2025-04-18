@@ -190,9 +190,9 @@ check_digit:
 
 check_if_lowercase:
     #Check if char is in range from'a' to 'p'
-    li $t7, 0x61 # ASCII code for 'a'
+    li $t7, 97 # ASCII code for 'a'
     blt $t6, $t7, check_if_uppercase # Check if char is less that a in ascii code
-    add $t8, $t7, $t0 # 'a' + 20 gives the first invalid letter
+    add $t8, $t7, $s7 # 'a' + 20 gives the first invalid letter
     bge $t6, $t8, check_if_uppercase # Check if char is greater than p
 
     #So if its lowercase ....remember it equals 10+(char- 'a')
@@ -204,17 +204,15 @@ check_if_lowercase:
 
 check_if_uppercase:
     #Check if char is in range from'A' to 'P'
-    li $t7, 0x41 # ASCII code for 'A'
+    li $t7, 65 # ASCII code for 'A'
     blt $t6, $t7, invalid # Check if char is less that A in ascii code, if so its invalid
-    add $t8, $t7, $t0   # 'A' + M gives the first invalid letter
+    add $t8, $t7, $s7   # 'A' + M gives the first invalid letter
     bge $t6, $t8, invalid # Check if char is greater than P in ascii code, if so its invalid
     
     #So if its valid ....remember it equals 10 + (char- 'A')
     sub $t9, $t6, $t7 # Calculate char - 'A'
     addi $t9, $t9, 10 # Add 10
-    #nop    # so $t9 is updated
-    j    valid_digit
-    #nop
+
 
 valid_digit:
     # Works only when a valid digit is found
