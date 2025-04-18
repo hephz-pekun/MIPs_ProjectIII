@@ -170,11 +170,16 @@ get_character:
     bge $t5, 10, solve #If index >=10, get results
     lb $t6, 0($a0) #Read/Load character
     beqz $t6, space_pad
+    j    check_digit
 
+space_pad:
+    # Pad space
+    li   $t6, 32     # so space becomes null
+  
 check_digit:
     #Check if char(index) is a digit from 0 to 9
-    li $t7, 0x30 # ASCII code for 0
-    li $t8, 0x39 # ASCII code for 9
+    li $t7, 48 # ASCII code for 0
+    li $t8, 57 # ASCII code for 9
     blt $t6, $t7, check_if_lowercase # Check if char is lowercase if less than 0
     bgt $t6, $t8, check_if_lowercase # Check if char is lowercase if greter than 9
     # If char is a digit
@@ -234,11 +239,6 @@ invalid:
     #Continue/skip char if its not valid 
     j move_index
 
-
-space_pad:
-    # Pad space
-    li   $t6, 0x20     # so space becomes null
-    j    check_digit
 
 move_index:
     addi $t5, $t5, 1 # Add one to move to next char
