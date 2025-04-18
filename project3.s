@@ -126,6 +126,14 @@ ps_loop:
     sw   $s1, 0($sp)
 
     jal  get_substring_value
+
+    # store into array
+    sw   $t1, 0($s0)
+    addi $s0, $s0, 4
+    addi $s2, $s2, 1
+    addi $s1, $s1, 10
+    j    ps_loop
+
 ps_done:
     move $v0, $s2
 
