@@ -247,4 +247,12 @@ solve:
 
 save_null:
     li $v0, 0x7FFFFFFF # code to print string since N/A is saved as a string
-    jr $ra
+    
+return_value:
+    # restore $s1–$s3
+    lw   $s1, 8($sp)
+    lw   $s2, 4($sp)
+    lw   $s3, 0($sp)
+    addi $sp, $sp, 12
+
+    addi $sp, $sp, -4
