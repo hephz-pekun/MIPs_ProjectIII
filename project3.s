@@ -205,9 +205,9 @@ check_if_lowercase:
 check_if_uppercase:
     #Check if char is in range from'A' to 'P'
     li $t7, 65 # ASCII code for 'A'
-    blt $t6, $t7, invalid # Check if char is less that A in ascii code, if so its invalid
+    blt $t6, $t7, move_index # Check if char is less that A in ascii code, if so its invalid
     add $t8, $t7, $s7   # 'A' + M gives the first invalid letter
-    bge $t6, $t8, invalid # Check if char is greater than P in ascii code, if so its invalid
+    bge $t6, $t8, move_index # Check if char is greater than P in ascii code, if so its invalid
     
     #So if its valid ....remember it equals 10 + (char- 'A')
     sub $t9, $t6, $t7 # Calculate char - 'A'
@@ -230,13 +230,6 @@ valid_digit:
 add_first:
     #Add to G
     add $s1, $s1, $t9
-    j       move_index
-
-
-invalid:
-    #Continue/skip char if its not valid 
-    j move_index
-
 
 move_index:
     addi $t5, $t5, 1 # Add one to move to next char
@@ -249,8 +242,8 @@ solve:
     #If
     beqz $s3, save_null
     #Else
-    sub $v0, $s1, $s2
-    jr $ra # Return
+    sub $t0, $s1, $s2
+    jr return_value # Return
 
 save_null:
     li $v0, 0x7FFFFFFF # code to print string since N/A is saved as a string
