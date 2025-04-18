@@ -20,6 +20,13 @@ main: #Start
     li $t1, 10
     sub $s7, $t0, $t1 # M = N - 10
     
+    #Collect input from user
+    li $v0, 8 #code for reading a string
+    la $a0, SpaceInput # address of space
+    li $a1, 1002 #Max num of chars to reading
+    syscall
+
+    la   $t7, SpaceInput    # pointer to input string
 
     # Set up range a - (M-1) = a - p
     #Set up letter range of lowercases
@@ -31,18 +38,13 @@ main: #Start
     add $t6, $t5, $t2 #add to calculate the range in ascii code
     addi $t6, $t6, -1 # Subtract one so it does not go over
 
-    #Collect input from user
-    li $v0, 8 #code for reading a string
-    la $a0, SpaceInput # address of space
-    li $a1, 1002 #Max num of chars to reading
-    syscall
+
 
     # $s0: current index (0 to 9)
     # $s1: sum for first half (G)
     # $s2: sum for second half (H)
     # $s3: count of valid digits encountered
 
-    la   $t7, SpaceInput    # pointer to input string
 
 remove_newline:
     lb   $t0, 0($t7)
