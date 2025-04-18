@@ -59,10 +59,14 @@ replace_null:
     # Initalize loop and sums
 
 no_remove:
-    li $t2, 0 # Counter for character
-   
-    li $s0, 0 # Output
+    la   $a0, SpaceInput
+    la   $a1, strint
+    jal  process_string
 
+    move $t0, $v0        # count
+    li   $t1, 0          # index
+    la   $t2, strint     # array base
+    
 get_substrings:
     beq $t2, 1000, exit 
     # Check first char of the group
