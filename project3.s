@@ -3,25 +3,29 @@
 SpaceInput: .space 1002 #space 1000 character + end + newline
 null_msg: .asciiz "NULL"
 semicolon: .asciiz ";"
+.align 2
+strint: .space 4000  # Array to store results (4 bytes * 1000 max entries)
+
 
 .text
 .globl main
-
+#------------------------------------------------------------
+# main: read string, strip newline, call process_string, then
+#       print strint[0..count-1] per spec.
+#------------------------------------------------------------
 main: #Start
     # Hard code N
     li $t0, 26  # N = 26 + (X % 11) = 26
     #Solve for N
     li $t1, 10
-    sub $t2, $t0, $t1 # M = N - 10
+    sub $s7, $t0, $t1 # M = N - 10
     
-    move $s7, $t2           # Save M in $s7 for later use
 
     # Set up range a - (M-1) = a - p
     #Set up letter range of lowercases
     li $t3, 0x61 #ASCII for 'a'
     add $t4, $t3, $t2 # add to calculate the range in ascii code
     addi $t4, $t4, -1 # Subtract one so it does not go over
-
     #Set up letter range for upercases
     li $t5, 0x41 #ASCII for 'A'
     add $t6, $t5, $t2 #add to calculate the range in ascii code
