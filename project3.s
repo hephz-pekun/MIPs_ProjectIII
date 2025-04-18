@@ -254,5 +254,7 @@ return_value:
     lw   $s2, 4($sp)
     lw   $s3, 0($sp)
     addi $sp, $sp, 12
-
+    #push return
     addi $sp, $sp, -4
+    sw   $t0, 0($sp)
+    jr   $ra
