@@ -84,10 +84,9 @@ get_substrings:
     j    print_semicolon
 
 print_null:
-    # Print semicolon
-    beqz $s0, no_null_semicolon
+    # Print null
     li $v0,4
-    la $a0, semicolon
+    la $a0, null_msg
     syscall
 
 print_semicolon:
@@ -98,13 +97,8 @@ print_semicolon:
     syscall
 
 no_semicolon:
-    li $s0, 1
-    li $v0, 4
-    la $a0, null_msg
-    syscall
-
     #Reset
-    addi $t2, $t2, 10
+    addi $t2, $t2, 4
     j get_substrings
 
 exit:
