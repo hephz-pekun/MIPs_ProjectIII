@@ -66,28 +66,13 @@ no_remove:
     move $t0, $v0        # count
     li   $t1, 0          # index
     la   $t2, strint     # array base
-    
+
 get_substrings:
-    beq $t2, 1000, exit 
-    # Check first char of the group
-    la $t7, SpaceInput #load base address of input buffer
-    add $t7, $t7, $t2 # Go to start address of group
-    lb $t8, 0($t7) # load first char 
-    beqz $t8, exit # exit if null
-
-    #Else
-    la $a0, SpaceInput
-    add $a0, $a0, $t2 # get group
-    #Call get_substring_value
-    jal get_substring_value
-    move $t9, $v0 #save ans
-
-    # Check for NULL
-    li $t4, 0x7FFFFFFF
-    beq $t9, $t4, print_null
-
-    #Print semicolon if not output
-    beqz $s0, no_semicolon
+    beq $t1, 1000, exit 
+    lw   $t3, 0($t2)
+    li   $t4, 0x7FFFFFFF
+    beq  $t3, $t4, print_null
+    
     li $v0, 4
     la $a0, semicolon
     syscall
