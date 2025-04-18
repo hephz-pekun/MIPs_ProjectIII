@@ -105,7 +105,15 @@ exit:
     #Exit program
     li $v0, 10 # code for exit
     syscall
-
+#------------------------------------------------------------
+# process_string(strptr in $a0, arrptr in $a1):
+#------------------------------------------------------------
+process_string:
+    addi $sp, $sp, -16
+    sw   $ra,    0($sp)
+    sw   $s0,    4($sp)
+    sw   $s1,    8($sp)
+    sw   $s2,   12($sp)
 get_substring_value:
     li $t5, 0 # Counter
     li $s1, 0 # Sum of G
