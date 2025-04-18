@@ -30,13 +30,13 @@ main: #Start
 
     # Set up range a - (M-1) = a - p
     #Set up letter range of lowercases
-    li $t3, 0x61 #ASCII for 'a'
-    add $t4, $t3, $t2 # add to calculate the range in ascii code
-    addi $t4, $t4, -1 # Subtract one so it does not go over
+    #li $t3, 0x61 #ASCII for 'a'
+    #add $t4, $t3, $t2 # add to calculate the range in ascii code
+    #addi $t4, $t4, -1 # Subtract one so it does not go over
     #Set up letter range for upercases
-    li $t5, 0x41 #ASCII for 'A'
-    add $t6, $t5, $t2 #add to calculate the range in ascii code
-    addi $t6, $t6, -1 # Subtract one so it does not go over
+    #li $t5, 0x41 #ASCII for 'A'
+    #add $t6, $t5, $t2 #add to calculate the range in ascii code
+    #addi $t6, $t6, -1 # Subtract one so it does not go over
 
 
 
