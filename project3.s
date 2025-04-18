@@ -121,6 +121,14 @@ process_string:
 ps_loop:
     lb   $t0, 0($s1)
     beqz $t0, ps_done
+
+ps_done:
+    move $v0, $s2
+
+    lw   $ra,    0($sp)
+    lw   $s0,    4($sp)
+    lw   $s1,    8($sp)
+    lw   $s2,   12($sp)
 get_substring_value:
     li $t5, 0 # Counter
     li $s1, 0 # Sum of G
