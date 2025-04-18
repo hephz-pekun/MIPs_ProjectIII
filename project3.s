@@ -28,24 +28,6 @@ main: #Start
 
     la   $t7, SpaceInput    # pointer to input string
 
-    # Set up range a - (M-1) = a - p
-    #Set up letter range of lowercases
-    #li $t3, 0x61 #ASCII for 'a'
-    #add $t4, $t3, $t2 # add to calculate the range in ascii code
-    #addi $t4, $t4, -1 # Subtract one so it does not go over
-    #Set up letter range for upercases
-    #li $t5, 0x41 #ASCII for 'A'
-    #add $t6, $t5, $t2 #add to calculate the range in ascii code
-    #addi $t6, $t6, -1 # Subtract one so it does not go over
-
-
-
-    # $s0: current index (0 to 9)
-    # $s1: sum for first half (G)
-    # $s2: sum for second half (H)
-    # $s3: count of valid digits encountered
-
-
 remove_newline:
     lb   $t0, 0($t7)
     beqz $t0, no_remove    # reached end of string
@@ -68,14 +50,10 @@ no_remove:
     la   $t2, strint     # array base
 
 get_substrings:
-    beq $t1, 1000, exit 
+    beq $t1, $t0, exit 
     lw   $t3, 0($t2)
     li   $t4, 0x7FFFFFFF
     beq  $t3, $t4, print_null
-    
-    li $v0, 4
-    la $a0, semicolon
-    syscall
 
     #print integer
     li   $v0, 1
@@ -85,7 +63,7 @@ get_substrings:
 
 print_null:
     # Print null
-    li $v0,4
+    li $v0, 4
     la $a0, null_msg
     syscall
 
@@ -107,6 +85,10 @@ exit:
     syscall
 #------------------------------------------------------------
 # process_string(strptr in $a0, arrptr in $a1):
+    # $s0: current index (0 to 9)
+    # $s1: sum for first half (G)
+    # $s2: sum for second half (H)
+    # $s3: count of valid digits encountered
 #------------------------------------------------------------
 process_string:
     addi $sp, $sp, -16
@@ -114,9 +96,9 @@ process_string:
     sw   $s0,    4($sp)
     sw   $s1,    8($sp)
     sw   $s2,   12($sp)
-    move $s0, $a1
-    move $s1, $a0
-    li   $s2, 0
+    move $s0, $a1        # arrptr
+    move $s1, $a0        # strptr
+    li   $s2, 0          # count = 0
 
 ps_loop:
     lb   $t0, 0($s1)
@@ -148,6 +130,10 @@ ps_done:
 
 #------------------------------------------------------------
 # get_substring_value:
+#   pops one word off stack → $a0,
+#   processes exactly 10 chars, sums G,H base‑N digits,
+#   pushes G–H or 0x7FFFFFFF back on stack.
+#   preserve $s1–$s3.
 #------------------------------------------------------------
 get_substring_value:
     # pop substring address into $a0
