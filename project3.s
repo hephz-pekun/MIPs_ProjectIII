@@ -126,7 +126,9 @@ ps_loop:
     sw   $s1, 0($sp)
 
     jal  get_substring_value
-
+    # pop return value into $t1
+    lw   $t1, 0($sp)
+    addi $sp, $sp, 4
     # store into array
     sw   $t1, 0($s0)
     addi $s0, $s0, 4
@@ -135,8 +137,8 @@ ps_loop:
     j    ps_loop
 
 ps_done:
-    move $v0, $s2
-
+    move $v0, $s2 #return count
+    # restore $ra and $s0–$s2
     lw   $ra,    0($sp)
     lw   $s0,    4($sp)
     lw   $s1,    8($sp)
@@ -148,6 +150,9 @@ ps_done:
 # get_substring_value:
 #------------------------------------------------------------
 get_substring_value:
+    # pop substring address into $a0
+    lw   $a0, 0($sp)
+    addi $sp, $sp, 4
     li $t5, 0 # Counter
     li $s1, 0 # Sum of G
     li $s2, 0 # Sum of H
