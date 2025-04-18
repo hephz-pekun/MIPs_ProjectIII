@@ -153,11 +153,17 @@ get_substring_value:
     # pop substring address into $a0
     lw   $a0, 0($sp)
     addi $sp, $sp, 4
-    li $t5, 0 # Counter
+    # save $s1–$s3
+    addi $sp, $sp, -12
+    sw   $s1, 8($sp)
+    sw   $s2, 4($sp)
+    sw   $s3, 0($sp)
+
+    # init
+    li $t5, 0 # char index
     li $s1, 0 # Sum of G
     li $s2, 0 # Sum of H
     li $s3, 0 # Digit count
-    move $t0, $s7         # retrieve M value from $s7
 
     # Go through 10 chars in input
 get_character:
