@@ -77,12 +77,6 @@ get_substrings:
     la $a0, semicolon
     syscall
 
-no_semicolon:
-    li $s0, 1 #Note output
-    #Print
-    li $v0, 1
-    move $a0, $t9 #save ans
-    syscall
     #print integer
     li   $v0, 1
     move $a0, $t3
@@ -97,8 +91,13 @@ print_null:
     syscall
 
 print_semicolon:
+    addi $t1, $t1, 1
+    beq  $t1, $t0, no_semicolon
+    li   $v0, 4
+    la   $a0, semicolon
+    syscall
 
-no_null_semicolon:
+no_semicolon:
     li $s0, 1
     li $v0, 4
     la $a0, null_msg
