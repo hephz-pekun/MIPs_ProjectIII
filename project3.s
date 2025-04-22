@@ -229,7 +229,7 @@ solve:
     beqz $s3, save_null
     #Else
     sub $t0, $s1, $s2
-    jr return_value # Return
+    j return_value # Return
 
 save_null:
     li $v0, 0x7FFFFFFF # code to print string since N/A is saved as a string
