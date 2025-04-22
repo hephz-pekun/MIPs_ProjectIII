@@ -27,7 +27,7 @@ main: #Start
     syscall
 
     la   $t7, SpaceInput    # pointer to input string
-
+ 
 remove_newline:
     lb   $t0, 0($t7)
     beqz $t0, no_remove    # reached end of string
@@ -179,7 +179,7 @@ check_if_lowercase:
     li $t7, 97 # ASCII code for 'a'
     blt $t6, $t7, check_if_uppercase # Check if char is less that a in ascii code
     add $t8, $t7, $s7 # 'a' + 20 gives the first invalid letter
-    bge $t6, $t8, check_if_uppercase # Check if char is greater than p
+    bge $t6, $t8, move_index # Check if char is greater than p
 
     #So if its lowercase ....remember it equals 10+(char- 'a')
     sub $t9, $t6, $t7 # Calculate char - 'a'
