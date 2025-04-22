@@ -232,7 +232,7 @@ solve:
     j return_value # Return
 
 save_null:
-    li $v0, 0x7FFFFFFF # code to print string since N/A is saved as a string
+    li $t0, 0x7FFFFFFF # code to print string since N/A is saved as a string
     
 return_value:
     # restore $s1–$s3
